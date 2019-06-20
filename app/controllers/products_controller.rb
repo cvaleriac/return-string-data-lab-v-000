@@ -18,9 +18,14 @@ def create
   redirect_to product_path(@product)
 end
 
-  def body
-    product = Product.find(params[:id])
+  def description
+    product = Product.find_by(id: params[:id])
     render plain: product.description
+  end
+
+  def inventory
+    product = Product.find_by(id: params[:id])
+    render plain: product.inventory > 0? "true" : "false"
   end
 
   def product_params
