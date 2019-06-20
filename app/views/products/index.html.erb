@@ -1,16 +1,23 @@
-
 <% @products.each do |product| %>
-  <%= render partial: "product", locals: {product: product} %>
-<% end %>
+<div id="product-<%=product.id%>"><%= product.name %> - <%= truncate product.description %>
+</div>
+<button class="js-more" data-id="<%= product.id %>">More...</button>
+  <% end %>
 
 <script type="text/javascript" charset="utf-8">
-$(function () {
-  $(".js-more").on('click', function() {
-    let id = $(this).data("id");
-    $.get("/products/" + id + "/body", function(data) {
-      // Replace text of body-id div
-      $("#body-" + id).text(data);
+  $(function(){
+    $(".js-more").on('click', function(){
+      var id = $(this).data("id");
+      $.get("/products/" + id + "/description", function(data){
+        $("#product-"+id).append(data);
+      });
+      $.get("products/" + id + "/inventory", function(data){
+        if (data === "true") {
+          $("#product-" + id).append(" Available")
+        }else{
+          $("#product-"+ id).append(" Sold Out")
+        }
+      });
     });
   });
-});
 </script>
