@@ -24,6 +24,6 @@ end
   end
 
   def product_params
-      params.require(:product).permit(:name, :description)
+      params.require(:product).permit(:name, :description, :price, :inventory)
     end
 end
