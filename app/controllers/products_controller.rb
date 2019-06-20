@@ -28,7 +28,7 @@ if @product.save
 
   def inventory
     product = Product.find_by(id: params[:id])
-    render plain: product.inventory?.to_s
+     render plain: product.inventory > 0? "true" : "false"
   end
 
   def product_params
